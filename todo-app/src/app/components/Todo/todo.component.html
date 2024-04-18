@@ -6,28 +6,23 @@
         <input class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-gray-500" type="text"
           placeholder="Add Todo" [(ngModel)]="inputValue" (keydown.enter)="onAdd()">
         <button
-          class="flex-no-shrink p-2 border-2 rounded text-teal-500 border-teal-500 hover:text-white hover:bg-teal-500"
-          [ngClass]="{ 'cursor-not-allowed border-gray-500 text-gray-400 hover:bg-gray-400': !inputValue }"
+          class="{{ !inputValue ? 'cursor-not-allowed border-gray-500 text-gray-400 hover:bg-gray-400': ''}} flex-no-shrink p-2 border-2 rounded text-teal-500 border-teal-500 hover:text-white hover:bg-teal-500"
           (click)="onAdd()">Add</button>
       </div>
     </div>
     <div>
-      @for (todo of todos; track todo.text) {
-      <div class="flex mb-4 items-center">
-        <p class="w-full text-grey-darkest" [ngClass]="{'line-through	': todo.completed }">{{todo.text}}</p>
-        @if (!todo.completed) {
-        <button
-          class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-green-600 border-green-600 hover:bg-green-600"
-          (click)="onCompleted(todo.id)">Done</button>
-        }
-        @else {
+      <div *ngFor="let todo of todos; index as i" class="flex mb-4 items-center">
+        <p class="{{todo.completed ? 'line-through' : ''}} w-full text-gray-500">{{todo.text}}</p>
         <button
           class="flex-no-shrink p-2 ml-2 border-2 rounded text-red-500 border-red-500 hover:text-white hover:bg-red-500"
           (click)="onRemove(todo.id)">Remove</button>
-        }
-
+        <button
+          class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-green-600 border-green-600 hover:bg-green-600"
+          (click)="onCompleted(todo.id)" *ngIf="!todo.completed">Done</button>
+        <button
+          class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-cyan-500 border-cyan-600 hover:bg-cyan-600"
+          (click)="onUndo(todo.id)" *ngIf="todo.completed">Undo</button>
       </div>
-      }
     </div>
   </div>
 </div>

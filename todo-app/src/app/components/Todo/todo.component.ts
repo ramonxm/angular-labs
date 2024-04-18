@@ -60,7 +60,7 @@ export class TodosComponent {
   onCompleted(id: string) {
     const todoIndex = this.findById(id);
 
-    if (this.checkIfExists(todoIndex)) {
+    if (!this.checkIfExists(todoIndex)) {
       alert("Todo não encontrado!");
 
       return;
@@ -69,10 +69,22 @@ export class TodosComponent {
     this.todos[todoIndex] = { ...this.todos[todoIndex], completed: true };
   }
 
+  onUndo(id: string) {
+    const todoIndex = this.findById(id);
+
+    if (!this.checkIfExists(todoIndex)) {
+      alert("Todo não encontrado!");
+
+      return;
+    }
+
+    this.todos[todoIndex] = { ...this.todos[todoIndex], completed: false };
+  }
+
   onRemove(id: string) {
     const todoIndex = this.findById(id);
 
-    if (this.checkIfExists(todoIndex)) {
+    if (!this.checkIfExists(todoIndex)) {
       alert("Todo não encontrado!");
 
       return;

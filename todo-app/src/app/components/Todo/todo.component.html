@@ -1,22 +1,31 @@
 <div class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
   <div class="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
     <div class="mb-4">
-      <h1 class="text-grey-darkest">All Tasks</h1>
+      <h1 class="text-gray-600">All Tasks</h1>
       <div class="flex mt-4">
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker"
-          placeholder="Add Todo">
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-gray-500" type="text"
+          placeholder="Add Todo" [(ngModel)]="inputValue" (keydown.enter)="onAdd()">
         <button
-          class="flex-no-shrink p-2 border-2 rounded text-teal border-teal hover:text-white hover:bg-teal">Add</button>
+          class="flex-no-shrink p-2 border-2 rounded text-teal-500 border-teal-500 hover:text-white hover:bg-teal-500"
+          [ngClass]="{ 'cursor-not-allowed border-gray-500 text-gray-400 hover:bg-gray-400': !inputValue }"
+          (click)="onAdd()">Add</button>
       </div>
     </div>
     <div>
       @for (todo of todos; track todo.text) {
       <div class="flex mb-4 items-center">
-        <p class="w-full text-grey-darkest">{{todo.text}}</p>
+        <p class="w-full text-grey-darkest" [ngClass]="{'line-through	': todo.completed }">{{todo.text}}</p>
+        @if (!todo.completed) {
         <button
-          class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-green border-green hover:bg-green">Done</button>
+          class="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-green-600 border-green-600 hover:bg-green-600"
+          (click)="onCompleted(todo.id)">Done</button>
+        }
+        @else {
         <button
-          class="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Remove</button>
+          class="flex-no-shrink p-2 ml-2 border-2 rounded text-red-500 border-red-500 hover:text-white hover:bg-red-500"
+          (click)="onRemove(todo.id)">Remove</button>
+        }
+
       </div>
       }
     </div>

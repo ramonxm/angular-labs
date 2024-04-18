@@ -29,6 +29,10 @@ export class TodosComponent {
     ];
   }
 
+  private checkIfExists(index: number) {
+    return index !== -1;
+  }
+
   private findById(id: string) {
     const todoIndex = this.todos.findIndex((todo) => todo.id === id);
 
@@ -56,8 +60,10 @@ export class TodosComponent {
   onCompleted(id: string) {
     const todoIndex = this.findById(id);
 
-    if (todoIndex === -1) {
+    if (this.checkIfExists(todoIndex)) {
       alert("Todo não encontrado!");
+
+      return;
     }
 
     this.todos[todoIndex] = { ...this.todos[todoIndex], completed: true };
@@ -66,8 +72,10 @@ export class TodosComponent {
   onRemove(id: string) {
     const todoIndex = this.findById(id);
 
-    if (todoIndex === -1) {
+    if (this.checkIfExists(todoIndex)) {
       alert("Todo não encontrado!");
+
+      return;
     }
 
     this.todos.splice(todoIndex, 1);
